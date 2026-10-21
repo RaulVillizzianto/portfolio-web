@@ -1,51 +1,74 @@
 /**
  * Datos personales que se repiten en varias páginas y en el CV.
- * Lo marcado como TODO está listado en PENDIENTES.md.
+ * Fuente: el CV de Raúl (octubre de 2026). Lo marcado como TODO está listado en PENDIENTES.md.
  */
 export const perfil = {
   nombre: 'Raúl Villizzianto',
   nombreCompleto: 'Raúl Andrés Villizzianto',
-  // TODO: confirmar título profesional (ver PENDIENTES.md).
-  titulo: 'Desarrollador de software · .NET y TypeScript',
-  ubicacion: 'Buenos Aires, Argentina (GBA Sur)',
+  titulo: 'Desarrollador Sr .NET / Java · full stack',
+  ubicacion: 'Buenos Aires, Argentina (zona sur)',
   email: 'raulvillizzianto@gmail.com',
   github: 'https://github.com/RaulVillizzianto',
   linkedin: 'https://www.linkedin.com/in/raul-andres-villizzianto-a754651ab/',
   /** Presentación corta para la portada y el CV. */
   presentacion:
-    'Desarrollo software desde 2022, sobre todo backend en .NET y aplicaciones web con TypeScript. ' +
-    'Trabajé en integraciones bancarias y de pagos, sistemas de salud y automatizaciones, y hoy ' +
+    'Desarrollo software desde 2019, sobre todo backend en .NET y Java para bancos y logística ' +
+    '(Accenture para Banco Galicia, Andreani, Banco de Valores y hoy Novatium para el Banco Nación): ' +
+    'APIs REST, procesos batch, librerías compartidas y frontends en Angular y React. En paralelo ' +
     'diseño y construyo productos SaaS completos: API modular en ASP.NET Core, web en Next.js, ' +
     'app móvil con Expo y despliegue en la nube.',
-  /** Qué busco (se muestra en la portada). TODO: ajustar a lo que Raúl quiera decir. */
+  /** Qué busco (se muestra en la portada). */
   buscando:
-    'Estoy abierto a propuestas como desarrollador backend o full stack, remoto o en Buenos Aires.',
+    'Busco seguir creciendo dentro del ecosistema .NET, en equipos con buenas prácticas y problemas ' +
+    'que valgan la pena. Disponibilidad full time, remoto o mixto en CABA.',
   /** Habilidades agrupadas para el CV. */
   habilidades: [
     {
       grupo: 'Backend',
-      items: ['C# / .NET 6–10', 'ASP.NET Core (Minimal APIs, MVC)', 'EF Core', 'Dapper', 'Hangfire', 'FluentValidation'],
+      items: ['C# / .NET 6–10', 'ASP.NET Core (Minimal APIs, MVC)', 'Java', 'EF Core', 'Dapper', 'Hangfire', 'VB.NET', 'COBOL / JCL'],
     },
     {
       grupo: 'Frontend y móvil',
-      items: ['TypeScript', 'Next.js / React', 'Tailwind CSS', 'Expo / React Native', 'Astro'],
+      items: ['TypeScript', 'React / Next.js', 'Angular', 'Tailwind CSS', 'Expo / React Native', 'Astro'],
     },
     {
       grupo: 'Datos y mensajería',
-      items: ['PostgreSQL', 'SQL Server', 'MongoDB', 'SQLite', 'RabbitMQ', 'Redis'],
+      items: ['SQL Server', 'PostgreSQL', 'MongoDB', 'DB2', 'SQLite', 'RabbitMQ', 'Redis'],
     },
     {
       grupo: 'Integraciones',
-      items: ['Mercado Pago', 'API BIND', 'Binance / Kraken', 'Webhooks idempotentes', 'OAuth / JWT', 'Claude API'],
+      items: ['Mercado Pago', 'Binance / Kraken', 'Webhooks idempotentes', 'OAuth / JWT', 'Claude API'],
     },
     {
-      grupo: 'Infraestructura',
-      items: ['Docker', 'GitHub Actions', 'Railway', 'Cloudflare R2 / S3', 'Playwright'],
+      grupo: 'Infraestructura y gestión',
+      items: ['Docker', 'Red Hat OpenShift', 'GitHub Actions', 'Railway', 'Cloudflare R2 / S3', 'Git', 'TFS', 'Jira', 'metodologías ágiles'],
     },
   ],
+  /** Formación académica y complementaria, para el CV. */
+  formacion: {
+    academica: [
+      {
+        titulo: 'Licenciatura en Sistemas (en curso)',
+        institucion: 'Universidad Abierta Interamericana (UAI), Lomas de Zamora',
+        periodo: '2020 – actualidad',
+      },
+      {
+        titulo: 'Bachiller en Economía y Administración',
+        institucion: 'Instituto Nuestra Señora del Huerto, Temperley',
+        periodo: '2012 – 2017',
+      },
+    ],
+    complementaria: [
+      { titulo: 'First Certificate in English (B2)', institucion: 'Cambridge' },
+      { titulo: 'Certificación en React', institucion: 'Educación IT', periodo: '2024' },
+      { titulo: 'Certificación en Angular', institucion: 'Educación IT', periodo: '2024' },
+      { titulo: 'Programación en Android', institucion: 'Udemy', periodo: '2021' },
+      { titulo: 'Programación en C#', institucion: 'Udemy', periodo: '2020' },
+      { titulo: 'Máster en SQL Server', institucion: 'Udemy' },
+    ],
+  },
   idiomas: [
     { idioma: 'Español', nivel: 'nativo' },
-    // TODO: confirmar nivel de inglés.
-    { idioma: 'Inglés', nivel: 'TODO' },
+    { idioma: 'Inglés', nivel: 'bilingüe (First Certificate B2, Cambridge)' },
   ],
 } as const;

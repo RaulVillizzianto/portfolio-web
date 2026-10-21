@@ -1,6 +1,6 @@
 ---
-empresa: Desarrollo independiente
-puesto: Desarrollador full stack
+empresa: Proyectos propios
+puesto: Desarrollador full stack (en paralelo al trabajo)
 inicio: 2026-05
 resumen: Diseño y construcción de productos SaaS completos (API modular en ASP.NET Core, web en Next.js, app móvil con Expo) con infraestructura en la nube y CI.
 stack:
@@ -13,10 +13,9 @@ stack:
   - Railway
   - GitHub Actions
 ubicacion: Remoto
-orden: 1
+orden: 5
 pendientes:
-  - Confirmar cómo describir esta etapa (freelance, emprendimiento propio, ambos) y desde cuándo. Las fechas salen del primer commit de Varsel (mayo de 2026).
-  - Agregar experiencia anterior a 2024 si la hubo (los proyectos personales arrancan en 2022).
+  - Confirmar cómo describir esta etapa (freelance, emprendimiento propio, ambos). Las fechas salen del primer commit de Varsel (mayo de 2026).
 ---
 
 - **Materia OS**: SaaS de CRM, presupuestos, aprobación de entregables y cobranza condicionada para profesionales independientes. Arquitectura, API modular en ASP.NET Core 10, web en Next.js 16, app Expo y entorno de prueba en Railway.

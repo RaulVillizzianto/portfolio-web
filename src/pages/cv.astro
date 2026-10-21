@@ -111,6 +111,24 @@ const sitio = new URL(url('/'), Astro.site).toString();
     </section>
 
     <section>
+      <h2>Formación</h2>
+      {perfil.formacion.academica.map((f) => (
+        <div class="item">
+          <div class="item-cabecera">
+            <h3>{f.titulo}</h3>
+            <span class="periodo">{f.periodo}</span>
+          </div>
+          <p class="sub">{f.institucion}</p>
+        </div>
+      ))}
+      <p class="chico">
+        {perfil.formacion.complementaria
+          .map((c) => `${c.titulo} (${c.institucion}${'periodo' in c ? `, ${c.periodo}` : ''})`)
+          .join(' · ')}
+      </p>
+    </section>
+
+    <section>
       <h2>Idiomas</h2>
       <p>{perfil.idiomas.map((i) => `${i.idioma}: ${i.nivel}`).join(' · ')}</p>
     </section>

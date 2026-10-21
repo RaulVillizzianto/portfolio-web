@@ -4,9 +4,6 @@ Lo que no se pudo deducir de los repos y hay que completar o confirmar antes de 
 
 ## Datos personales (`src/data/perfil.ts`)
 
-- [ ] **Título profesional**: hoy dice "Desarrollador de software · .NET y TypeScript". ¿Hay un título formal (técnico, analista, ingeniero) o una formación que sumar? No hay sección de educación: agregarla en `src/pages/cv.astro` si corresponde.
-- [ ] **Presentación** y texto de "qué busco" (campos `presentacion` y `buscando`): revisar que digan lo que Raúl quiere decir.
-- [ ] **Nivel de inglés** (campo `idiomas`): figura como `TODO`.
 - [ ] **Foto**: no hay. Si se quiere, poner `public/foto.jpg` y agregarla en `src/pages/index.astro` y `src/pages/cv.astro`.
 - [ ] **Imagen de Open Graph**: el layout referencia `public/og.png`, que no existe. Crear una imagen de 1200×630 o quitar las etiquetas `og:image` de `src/layouts/Base.astro`.
 - [ ] LinkedIn: se tomó del perfil de GitHub (`linkedin.com/in/raul-andres-villizzianto-a754651ab`). Confirmar.
@@ -14,9 +11,9 @@ Lo que no se pudo deducir de los repos y hay que completar o confirmar antes de 
 
 ## Experiencia laboral (`src/content/experiencia/`)
 
-- [ ] **independiente.md**: describe la etapa 2026 (Varsel y Materia OS) como "desarrollo independiente". Confirmar cómo contarla y desde cuándo.
-- [ ] La etapa en Stark Solution (2024-2025) se quitó por pedido de Raúl junto con sus proyectos (EVWEB, tarjetas prepagas, PSP BIND, GCBA). Si se quiere contar la experiencia sin detalles de los proyectos, agregar una entrada genérica en `src/content/experiencia/`.
-- [ ] ¿Hubo otros trabajos (antes de 2024 o entre 2025-04 y 2026-05)? Agregar una entrada por cada uno.
+- [x] Experiencia laboral cargada desde el CV de Raúl (Accenture, Andreani, Banco de Valores, Novatium), con título, presentación, formación e inglés en `src/data/perfil.ts`. Falta revisar que la redacción le guste.
+- [ ] **independiente.md**: la etapa 2026 (Varsel y Materia OS) quedó como "Proyectos propios, en paralelo al trabajo". Confirmar cómo contarla y desde cuándo.
+- [ ] **novatium.md**: el CV dice "Actualidad"; confirmar que sigue vigente y, si no, poner `fin`.
 
 ## Fichas de proyectos (`src/content/proyectos/`)
 
