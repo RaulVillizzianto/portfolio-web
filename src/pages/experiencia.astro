@@ -1,0 +1,48 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { rango, url } from '../lib/utils';
+
+const entradas = (await getCollection('experiencia')).sort(
+  (a, b) => a.data.orden - b.data.orden || b.data.inicio.localeCompare(a.data.inicio),
+);
+const renderizadas = await Promise.all(
+  entradas.map(async (e) => ({ entrada: e, Content: (await render(e)).Content })),
+);
+const proyectos = await getCollection('proyectos');
+const laborales = proyectos.filter((p) => p.data.tipo === 'laboral').length;
+const freelance = proyectos.filter((p) => p.data.tipo === 'freelance').length;
+---
+
+<Base titulo="Experiencia" descripcion="Experiencia laboral y etapas profesionales, con los proyectos de cada una.">
+  <div class="seccion-cabecera">
+    <h1>Experiencia</h1>
+    <p class="suave" style="margin:0">
+      <a href={url('/proyectos?tipo=laboral')}>{laborales} proyectos laborales</a> ·
+      <a href={url('/proyectos?tipo=freelance')}>{freelance} freelance</a>
+    </p>
+  </div>
+
+  <ol class="linea-tiempo">
+    {renderizadas.map(({ entrada, Content }) => (
+      <li>
+        <div class="periodo">
+          {rango(entrada.data.inicio, entrada.data.fin)}
+          {entrada.data.ubicacion && <div>{entrada.data.ubicacion}</div>}
+        </div>
+        <div>
+          <h3>{entrada.data.puesto}</h3>
+          <div class="empresa">{entrada.data.empresa}</div>
+          <div class="prosa">
+            <Content />
+          </div>
+          {entrada.data.stack.length > 0 && (
+            <ul class="pildoras" aria-label="Tecnologías">
+              {entrada.data.stack.map((s) => <li class="pildora pildora-borde">{s}</li>)}
+            </ul>
+          )}
+        </div>
+      </li>
+    ))}
+  </ol>
+</Base>

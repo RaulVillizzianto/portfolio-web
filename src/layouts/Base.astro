@@ -1,0 +1,102 @@
+---
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import '../styles/global.css';
+import { perfil } from '../data/perfil';
+import { url } from '../lib/utils';
+
+interface Props {
+  /** Título de la pestaña y de Open Graph. Se le agrega el nombre al final. */
+  titulo?: string;
+  descripcion?: string;
+  /** Tipo de Open Graph: `website` para listados, `article` para fichas. */
+  tipo?: 'website' | 'article';
+  /** Evita que la página aparezca en buscadores (por ejemplo, el 404). */
+  noindex?: boolean;
+}
+
+const {
+  titulo,
+  descripcion = `${perfil.nombre}, ${perfil.titulo.toLowerCase()}. Experiencia laboral, proyectos freelance y CV.`,
+  tipo = 'website',
+  noindex = false,
+} = Astro.props;
+
+const tituloCompleto = titulo ? `${titulo} · ${perfil.nombre}` : `${perfil.nombre} · ${perfil.titulo}`;
+const canonica = new URL(Astro.url.pathname, Astro.site);
+// La imagen de Open Graph es opcional: se publica solo si existe public/og.png (1200×630).
+const imagenOg = existsSync(resolve(process.cwd(), 'public/og.png'))
+  ? new URL(url('/og.png'), Astro.site)
+  : undefined;
+const ruta = Astro.url.pathname.replace(/\/$/, '');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const enlaces = [
+  { href: url('/'), texto: 'Inicio', activo: ruta === base },
+  { href: url('/proyectos'), texto: 'Proyectos', activo: ruta.startsWith(`${base}/proyectos`) },
+  { href: url('/experiencia'), texto: 'Experiencia', activo: ruta === `${base}/experiencia` },
+  { href: url('/cv'), texto: 'CV', activo: ruta === `${base}/cv` },
+];
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <meta name="author" content={perfil.nombreCompleto} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonica} />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={url('/sitemap-index.xml')} />
+    <meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content={tipo} />
+    <meta property="og:site_name" content={perfil.nombre} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonica} />
+    {imagenOg && <meta property="og:image" content={imagenOg} />}
+    <meta property="og:locale" content="es_AR" />
+    <meta name="twitter:card" content={imagenOg ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={tituloCompleto} />
+    <meta name="twitter:description" content={descripcion} />
+    {imagenOg && <meta name="twitter:image" content={imagenOg} />}
+  </head>
+  <body>
+    <a class="visualmente-oculto" href="#contenido">Saltar al contenido</a>
+    <header class="encabezado">
+      <div class="contenedor">
+        <a class="marca" href={url('/')}>{perfil.nombre}</a>
+        <nav class="nav" aria-label="Principal">
+          {enlaces.map((e) => (
+            <a href={e.href} aria-current={e.activo ? 'page' : undefined}>
+              {e.texto}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <div class="contenedor">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="pie">
+      <div class="contenedor">
+        <span>© {new Date().getFullYear()} {perfil.nombreCompleto}</span>
+        <ul>
+          <li><a href={`mailto:${perfil.email}`}>Email</a></li>
+          <li><a href={perfil.github} rel="me noopener" target="_blank">GitHub</a></li>
+          <li><a href={perfil.linkedin} rel="me noopener" target="_blank">LinkedIn</a></li>
+          <li><a href="https://github.com/RaulVillizzianto/portfolio-web" rel="noopener" target="_blank">Código de este sitio</a></li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>

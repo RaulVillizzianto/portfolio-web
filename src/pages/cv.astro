@@ -1,0 +1,118 @@
+---
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { perfil } from '../data/perfil';
+import { ordenarProyectos, rango, url } from '../lib/utils';
+
+const experiencia = (await getCollection('experiencia')).sort(
+  (a, b) => a.data.orden - b.data.orden || b.data.inicio.localeCompare(a.data.inicio),
+);
+const experienciaRenderizada = await Promise.all(
+  experiencia.map(async (e) => ({ entrada: e, Content: (await render(e)).Content })),
+);
+
+// En el CV van los destacados y los proyectos laborales o freelance; los personales
+// más relevantes se agregan hasta completar ocho.
+const proyectos = ordenarProyectos(await getCollection('proyectos'));
+const principales = proyectos.filter((p) => p.data.destacado || p.data.tipo !== 'personal');
+const personales = proyectos.filter((p) => !principales.includes(p) && p.data.estado !== 'archivado');
+const enCv = [...principales, ...personales].slice(0, 8);
+
+// `pnpm cv` genera public/cv.pdf; el enlace solo se muestra si el archivo existe al compilar.
+const hayPdf = existsSync(resolve(process.cwd(), 'public/cv.pdf'));
+const sitio = new URL(url('/'), Astro.site).toString();
+---
+
+<Base titulo="CV" descripcion={`Currículum de ${perfil.nombreCompleto}: ${perfil.titulo.toLowerCase()}.`}>
+  <div class="cv-herramientas no-imprimir">
+    <p class="suave chico" style="margin:0">
+      Versión imprimible. Con «Imprimir» y destino «Guardar como PDF» sale en A4.
+    </p>
+    <div class="acciones">
+      {hayPdf && (
+        <a class="btn" href={url('/cv.pdf')} download="CV-Raul-Villizzianto.pdf">
+          Descargar PDF
+        </a>
+      )}
+      <button class="btn btn-primario" type="button" onclick="window.print()">Imprimir</button>
+    </div>
+  </div>
+
+  <article class="cv">
+    <header>
+      <div>
+        <h1>{perfil.nombreCompleto}</h1>
+        <div class="titulo">{perfil.titulo}</div>
+      </div>
+      <ul class="contacto">
+        <li>{perfil.ubicacion}</li>
+        <li><a href={`mailto:${perfil.email}`}>{perfil.email}</a></li>
+        <li><a href={perfil.linkedin}>{perfil.linkedin.replace('https://www.', '')}</a></li>
+        <li><a href={perfil.github}>{perfil.github.replace('https://', '')}</a></li>
+        <li><a href={sitio}>{sitio.replace('https://', '')}</a></li>
+      </ul>
+    </header>
+
+    <section>
+      <h2>Perfil</h2>
+      <p>{perfil.presentacion}</p>
+    </section>
+
+    <section>
+      <h2>Experiencia</h2>
+      {experienciaRenderizada.map(({ entrada, Content }) => (
+        <div class="item">
+          <div class="item-cabecera">
+            <h3>{entrada.data.puesto}</h3>
+            <span class="periodo">{rango(entrada.data.inicio, entrada.data.fin)}</span>
+          </div>
+          <p class="sub">
+            {entrada.data.empresa}
+            {entrada.data.ubicacion && ` · ${entrada.data.ubicacion}`}
+          </p>
+          <Content />
+          {entrada.data.stack.length > 0 && <div class="stack">{entrada.data.stack.join(' · ')}</div>}
+        </div>
+      ))}
+    </section>
+
+    <section>
+      <h2>Proyectos seleccionados</h2>
+      {enCv.map((p) => (
+        <div class="item">
+          <div class="item-cabecera">
+            <h3>
+              <a href={new URL(url(`/proyectos/${p.id}`), Astro.site).toString()}>{p.data.titulo}</a>
+            </h3>
+            <span class="periodo">{rango(p.data.inicio, p.data.fin)}</span>
+          </div>
+          <p class="sub">{p.data.rol}</p>
+          <p>{p.data.resumen}</p>
+          <div class="stack">{p.data.stack.join(' · ')}</div>
+        </div>
+      ))}
+      <p class="chico suave">
+        Lista completa en <a href={new URL(url('/proyectos'), Astro.site).toString()}>{sitio.replace('https://', '')}proyectos</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Habilidades</h2>
+      <dl class="habilidades">
+        {perfil.habilidades.map((h) => (
+          <>
+            <dt>{h.grupo}</dt>
+            <dd>{h.items.join(', ')}</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+
+    <section>
+      <h2>Idiomas</h2>
+      <p>{perfil.idiomas.map((i) => `${i.idioma}: ${i.nivel}`).join(' · ')}</p>
+    </section>
+  </article>
+</Base>

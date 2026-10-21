@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ETIQUETA_ESTADO, ETIQUETA_TIPO, rango, slugify, url } from '../lib/utils';
+
+interface Props {
+  proyecto: CollectionEntry<'proyectos'>;
+  /** Cuántas tecnologías mostrar antes de resumir con "+N". */
+  maxStack?: number;
+}
+
+const { proyecto, maxStack = 5 } = Astro.props;
+const { data } = proyecto;
+const visibles = data.stack.slice(0, maxStack);
+const restantes = data.stack.length - visibles.length;
+---
+
+<article
+  class:list={['tarjeta', { 'tarjeta-destacada': data.destacado }]}
+  data-tipo={data.tipo}
+  data-stack={data.stack.map(slugify).join(' ')}
+>
+  <div class="tarjeta-meta">
+    <span class:list={['pildora', { 'pildora-acento': data.destacado }]}>{ETIQUETA_TIPO[data.tipo]}</span>
+    <span>{rango(data.inicio, data.fin)}</span>
+    <span>{ETIQUETA_ESTADO[data.estado]}</span>
+  </div>
+  <h3><a href={url(`/proyectos/${proyecto.id}`)}>{data.titulo}</a></h3>
+  <p>{data.resumen}</p>
+  <ul class="pildoras" aria-label="Tecnologías">
+    {visibles.map((s) => <li class="pildora pildora-borde">{s}</li>)}
+    {restantes > 0 && <li class="pildora pildora-borde">+{restantes}</li>}
+  </ul>
+</article>

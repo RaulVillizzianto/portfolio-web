@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TarjetaProyecto from '../../components/TarjetaProyecto.astro';
+import { ETIQUETA_TIPO, ordenarProyectos, slugify, stacksUnicos } from '../../lib/utils';
+
+const proyectos = ordenarProyectos(await getCollection('proyectos'));
+const stacks = stacksUnicos(proyectos);
+const tipos = Object.keys(ETIQUETA_TIPO).filter((t) => proyectos.some((p) => p.data.tipo === t));
+const conteoPorTipo = Object.fromEntries(tipos.map((t) => [t, proyectos.filter((p) => p.data.tipo === t).length]));
+const conteoPorStack = Object.fromEntries(
+  stacks.map((s) => [s, proyectos.filter((p) => p.data.stack.includes(s)).length]),
+);
+---
+
+<Base
+  titulo="Proyectos"
+  descripcion={`${proyectos.length} proyectos freelance, laborales y personales: SaaS, integraciones bancarias y de pagos, trading, IoT y más.`}
+>
+  <div class="seccion-cabecera">
+    <h1>Proyectos</h1>
+    <p class="suave" style="margin:0">Freelance, laborales y personales, del más reciente al más antiguo.</p>
+  </div>
+
+  <form class="filtros" id="filtros" aria-label="Filtrar proyectos">
+    <fieldset>
+      <legend>Tipo</legend>
+      <label><input type="radio" name="tipo" value="" checked /><span>Todos ({proyectos.length})</span></label>
+      {tipos.map((t) => (
+        <label>
+          <input type="radio" name="tipo" value={t} />
+          <span>
+            {ETIQUETA_TIPO[t]} ({conteoPorTipo[t]})
+          </span>
+        </label>
+      ))}
+    </fieldset>
+    <div>
+      <label class="etiqueta" for="stack">Tecnología</label>
+      <select id="stack" name="stack">
+        <option value="">Todas</option>
+        {stacks.map((s) => (
+          <option value={slugify(s)}>
+            {s} ({conteoPorStack[s]})
+          </option>
+        ))}
+      </select>
+    </div>
+    <output class="resultado" for="filtros" id="resultado" aria-live="polite"></output>
+    <button type="reset" class="btn chico">Limpiar</button>
+  </form>
+
+  <div class="grilla grilla-3" id="lista">
+    {proyectos.map((p) => <TarjetaProyecto proyecto={p} />)}
+  </div>
+  <p class="vacio" id="vacio" hidden>No hay proyectos con esa combinación de filtros.</p>
+</Base>
+
+<script>
+  const form = document.getElementById('filtros') as HTMLFormElement;
+  const lista = document.getElementById('lista')!;
+  const vacio = document.getElementById('vacio')!;
+  const resultado = document.getElementById('resultado')!;
+  const tarjetas = [...lista.querySelectorAll<HTMLElement>('.tarjeta')];
+
+  function leerFiltros() {
+    const datos = new FormData(form);
+    return {
+      tipo: String(datos.get('tipo') ?? ''),
+      stack: String(datos.get('stack') ?? ''),
+    };
+  }
+
+  function aplicar(actualizarUrl = true) {
+    const { tipo, stack } = leerFiltros();
+    let visibles = 0;
+    for (const t of tarjetas) {
+      const coincideTipo = !tipo || t.dataset.tipo === tipo;
+      const coincideStack = !stack || (t.dataset.stack ?? '').split(' ').includes(stack);
+      const mostrar = coincideTipo && coincideStack;
+      t.hidden = !mostrar;
+      if (mostrar) visibles++;
+    }
+    vacio.hidden = visibles > 0;
+    resultado.textContent =
+      visibles === tarjetas.length ? '' : `${visibles} de ${tarjetas.length}`;
+
+    if (actualizarUrl) {
+      const params = new URLSearchParams();
+      if (tipo) params.set('tipo', tipo);
+      if (stack) params.set('stack', stack);
+      const qs = params.toString();
+      history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+    }
+  }
+
+  // Estado inicial desde la URL (?tipo=freelance&stack=postgresql).
+  const inicial = new URLSearchParams(location.search);
+  const tipoInicial = inicial.get('tipo') ?? '';
+  const stackInicial = inicial.get('stack') ?? '';
+  const radio = form.querySelector<HTMLInputElement>(`input[name="tipo"][value="${tipoInicial}"]`);
+  if (radio) radio.checked = true;
+  const select = form.querySelector<HTMLSelectElement>('#stack')!;
+  if ([...select.options].some((o) => o.value === stackInicial)) select.value = stackInicial;
+
+  form.addEventListener('change', () => aplicar());
+  form.addEventListener('reset', () => setTimeout(() => aplicar(), 0));
+  aplicar(false);
+</script>

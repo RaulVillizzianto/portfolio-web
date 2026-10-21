@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import TarjetaProyecto from '../components/TarjetaProyecto.astro';
+import { perfil } from '../data/perfil';
+import { ordenarProyectos, rango, url } from '../lib/utils';
+
+const proyectos = ordenarProyectos(await getCollection('proyectos'));
+const destacados = proyectos.filter((p) => p.data.destacado).slice(0, 4);
+const experiencia = (await getCollection('experiencia')).sort(
+  (a, b) => a.data.orden - b.data.orden || b.data.inicio.localeCompare(a.data.inicio),
+);
+const cantidad = proyectos.length;
+---
+
+<Base>
+  <section class="portada">
+    <p class="saludo">Hola, soy</p>
+    <h1>{perfil.nombreCompleto}</h1>
+    <p class="subtitulo">{perfil.titulo} · {perfil.ubicacion}</p>
+    <p class="presentacion">{perfil.presentacion}</p>
+    <p class="suave">{perfil.buscando}</p>
+    <div class="acciones">
+      <a class="btn btn-primario" href={url('/proyectos')}>Ver los {cantidad} proyectos</a>
+      <a class="btn" href={url('/cv')}>Ver CV</a>
+      <a class="btn" href={perfil.github} rel="me noopener" target="_blank">GitHub</a>
+      <a class="btn" href={perfil.linkedin} rel="me noopener" target="_blank">LinkedIn</a>
+    </div>
+  </section>
+
+  <section class="seccion" aria-labelledby="destacados">
+    <div class="seccion-cabecera">
+      <h2 id="destacados">Proyectos destacados</h2>
+      <a href={url('/proyectos')}>Todos los proyectos →</a>
+    </div>
+    <div class="grilla">
+      {destacados.map((p) => <TarjetaProyecto proyecto={p} maxStack={6} />)}
+    </div>
+  </section>
+
+  <section class="seccion" aria-labelledby="experiencia">
+    <div class="seccion-cabecera">
+      <h2 id="experiencia">Experiencia</h2>
+      <a href={url('/experiencia')}>Ver detalle →</a>
+    </div>
+    <ol class="linea-tiempo">
+      {experiencia.map((e) => (
+        <li>
+          <div class="periodo">{rango(e.data.inicio, e.data.fin)}</div>
+          <div>
+            <h3>{e.data.puesto}</h3>
+            <div class="empresa">{e.data.empresa}</div>
+            <p>{e.data.resumen}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="seccion" aria-labelledby="contacto">
+    <h2 id="contacto">Contacto</h2>
+    <p>
+      La forma más directa es el email: <a href={`mailto:${perfil.email}`}>{perfil.email}</a>. También estoy en
+      <a href={perfil.linkedin} rel="me noopener" target="_blank">LinkedIn</a> y el código de mis proyectos
+      públicos está en <a href={perfil.github} rel="me noopener" target="_blank">GitHub</a>.
+    </p>
+  </section>
+</Base>
