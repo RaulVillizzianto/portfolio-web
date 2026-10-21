@@ -2,6 +2,7 @@
 empresa: Novatium · cliente Banco Nación
 puesto: Desarrollador Sr .NET / Java
 inicio: 2025-02
+fin: 2025-06
 resumen: APIs REST y librerías compartidas para el Área de Apoyo y Regímenes Informativos del Banco Nación, con SQL Server, MongoDB y frontends en Angular y React.
 stack:
   - C# / .NET
@@ -11,7 +12,7 @@ stack:
   - Angular 13
   - React
 ubicacion: Buenos Aires
-orden: 10
+orden: 15
 ---
 
 Área de Apoyo y Regímenes Informativos.

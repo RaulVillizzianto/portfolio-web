@@ -13,7 +13,7 @@ Lo que no se pudo deducir de los repos y hay que completar o confirmar antes de 
 
 - [x] Experiencia laboral cargada desde el CV de Raúl (Accenture, Andreani, Banco de Valores, Novatium), con título, presentación, formación e inglés en `src/data/perfil.ts`. Falta revisar que la redacción le guste.
 - [ ] **independiente.md**: la etapa 2026 (Varsel y Materia OS) quedó como "Proyectos propios, en paralelo al trabajo". Confirmar cómo contarla y desde cuándo.
-- [ ] **novatium.md**: el CV dice "Actualidad"; confirmar que sigue vigente y, si no, poner `fin`.
+- [x] **chevron.md** agregado como trabajo actual (Software Engineer, Data Governance Tools, desde 2025-06) y **novatium.md** cerrado en 2025-06, según lo que dijo Raúl el 2026-10-21.
 
 ## Fichas de proyectos (`src/content/proyectos/`)
 

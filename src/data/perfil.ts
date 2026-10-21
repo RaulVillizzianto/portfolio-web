@@ -5,18 +5,19 @@
 export const perfil = {
   nombre: 'Raúl Villizzianto',
   nombreCompleto: 'Raúl Andrés Villizzianto',
-  titulo: 'Desarrollador Sr .NET / Java · full stack',
+  titulo: 'Software Engineer · .NET, Azure y data governance',
   ubicacion: 'Buenos Aires, Argentina (zona sur)',
   email: 'raulvillizzianto@gmail.com',
   github: 'https://github.com/RaulVillizzianto',
   linkedin: 'https://www.linkedin.com/in/raul-andres-villizzianto-a754651ab/',
   /** Presentación corta para la portada y el CV. */
   presentacion:
-    'Desarrollo software desde 2019, sobre todo backend en .NET y Java para bancos y logística ' +
-    '(Accenture para Banco Galicia, Andreani, Banco de Valores y hoy Novatium para el Banco Nación): ' +
-    'APIs REST, procesos batch, librerías compartidas y frontends en Angular y React. En paralelo ' +
-    'diseño y construyo productos SaaS completos: API modular en ASP.NET Core, web en Next.js, ' +
-    'app móvil con Expo y despliegue en la nube.',
+    'Desarrollo software desde 2019. Hoy soy Software Engineer en Chevron, en el equipo de Data ' +
+    'Governance Tools: APIs y soluciones de gobierno de datos de punta a punta sobre Azure, con ' +
+    'Collibra, Microsoft Purview, Synapse y Power BI. Antes, backend en .NET y Java para bancos y ' +
+    'logística (Accenture para Banco Galicia, Andreani, Banco de Valores y Novatium para el Banco ' +
+    'Nación). En paralelo diseño y construyo productos SaaS completos: API modular en ASP.NET Core, ' +
+    'web en Next.js, app móvil con Expo y despliegue en la nube.',
   /** Qué busco (se muestra en la portada). */
   buscando:
     'Busco seguir creciendo dentro del ecosistema .NET, en equipos con buenas prácticas y problemas ' +
@@ -33,15 +34,15 @@ export const perfil = {
     },
     {
       grupo: 'Datos y mensajería',
-      items: ['SQL Server', 'PostgreSQL', 'MongoDB', 'DB2', 'SQLite', 'RabbitMQ', 'Redis'],
+      items: ['SQL Server', 'PostgreSQL', 'MongoDB', 'DB2', 'SQLite', 'RabbitMQ', 'Redis', 'Azure Synapse', 'Power BI'],
     },
     {
       grupo: 'Integraciones',
-      items: ['Mercado Pago', 'Binance / Kraken', 'Webhooks idempotentes', 'OAuth / JWT', 'Claude API'],
+      items: ['Collibra', 'Microsoft Purview', 'Mercado Pago', 'Binance / Kraken', 'Webhooks idempotentes', 'OAuth / JWT', 'Claude API'],
     },
     {
       grupo: 'Infraestructura y gestión',
-      items: ['Docker', 'Red Hat OpenShift', 'GitHub Actions', 'Railway', 'Cloudflare R2 / S3', 'Git', 'TFS', 'Jira', 'metodologías ágiles'],
+      items: ['Azure', 'Docker', 'Red Hat OpenShift', 'GitHub Actions', 'Railway', 'Cloudflare R2 / S3', 'Git', 'TFS', 'Jira', 'metodologías ágiles'],
     },
   ],
   /** Formación académica y complementaria, para el CV. */
