@@ -1,0 +1,28 @@
+{
+  "name": "portfolio-web",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Web personal de Raúl Villizzianto: experiencia, proyectos y CV.",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "cv": "node scripts/cv.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdown-satteri": "0.4.4",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.11",
+    "typescript": "^5.9.3"
+  }
+}
