@@ -24,10 +24,12 @@ destacado: true
 estado: en-desarrollo
 confidencial: true
 orden: 1
-links: {}
+links:
+  otros:
+    - etiqueta: Sitio del producto
+      url: https://materia-os.com
 pendientes:
   - Confirmar si se puede nombrar al cliente (dueño del producto) y enlazar el repo (hoy es privado).
-  - Confirmar si se puede publicar la URL del entorno de prueba en Railway como demo.
   - Confirmar la fecha de inicio real del proyecto (el repo arranca el 2026-10-05; el diseño en Figma es anterior).
 ---
 
@@ -37,6 +39,7 @@ Materia OS es un SaaS para profesionales independientes y estudios chicos (arqui
 
 - **CRM y proyectos**: clientes, proyectos con etapas, tareas internas con responsable y horas, calendario y feed de actividad.
 - **Presupuestos interactivos**: un constructor por secciones tipadas (portada, textos, honorarios, opciones, plazos, esquema de pagos y términos) con versiones inmutables, vista previa A4 y PDF.
+- **Tarifario interno**: el catálogo de servicios del profesional con precio y unidad, importable desde la planilla de Excel en CSV, que autocompleta los honorarios del presupuesto.
 - **Portal del cliente** sin registro, por enlace de invitación: ve la propuesta, la aprueba con evidencia, revisa entregables con anotaciones sobre la imagen y conversa.
 - **Cobranza condicionada**: cada hito de pago genera una solicitud de cobro por Mercado Pago o USDT; **los archivos finales se liberan solo cuando el hito está pagado**. Materia nunca custodia el dinero: el pago llega directo a la cuenta o la wallet del profesional.
 - **Finanzas**: documentos de cobro numerados, vencimientos, recordatorios y agregados mensuales.
@@ -45,7 +48,7 @@ Materia OS es un SaaS para profesionales independientes y estudios chicos (arqui
 
 ## Mi rol
 
-Diseñé la arquitectura a partir de un prototipo de alta fidelidad en Figma y de un dossier de producto, la documenté en un documento técnico y 23 ADR, y la implementé de punta a punta: API, worker, web, app móvil, infraestructura y CI. El código está acompañado de tests unitarios, de integración (incluido un test de "cuenta vecina" por módulo para el aislamiento multi-tenant) y una suite E2E móvil con Maestro.
+Diseñé la arquitectura a partir de un prototipo de alta fidelidad en Figma y de un dossier de producto, la documenté en un documento técnico y 24 ADR, y la implementé de punta a punta: API, worker, web, app móvil, infraestructura y CI. El código está acompañado de tests unitarios, de integración (incluido un test de "cuenta vecina" por módulo para el aislamiento multi-tenant) y una suite E2E móvil con Maestro.
 
 ## Arquitectura
 
@@ -67,4 +70,4 @@ Tres procesos (web, API y worker) sobre dos almacenes (PostgreSQL y un bucket S3
 
 ## Estado
 
-La fase 1 (el núcleo cobrable) está completa en código y corre en un entorno de prueba en Railway para los primeros usuarios. La app móvil tiene las fases M1 a M5 hechas y verificadas con tests; la publicación en las tiendas espera las cuentas de Apple y Google.
+La fase 1 (el núcleo cobrable) está completa en código y corre en Railway con dominio propio ([materia-os.com](https://materia-os.com)) para los primeros usuarios, con emails transaccionales por Resend. La app móvil tiene las fases M1 a M5 hechas y verificadas con tests; la publicación en las tiendas espera las cuentas de Apple y Google.

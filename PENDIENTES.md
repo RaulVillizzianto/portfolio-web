@@ -19,7 +19,7 @@ Lo que no se pudo deducir de los repos y hay que completar o confirmar antes de 
 
 ### Confidencialidad y enlaces
 
-- [ ] **materia-os.md**: ¿se puede nombrar al cliente? ¿Se puede enlazar el repo (privado) o el entorno de prueba en Railway? ¿Fecha de inicio real?
+- [ ] **materia-os.md**: ¿se puede nombrar al cliente? ¿Se puede enlazar el repo (privado)? ¿Fecha de inicio real? (El sitio `materia-os.com` ya está enlazado, confirmado por Raúl el 2026-10-27.)
 - [ ] **varsel.md**: ¿es emprendimiento propio o para un cliente? Hoy está como `personal`. ¿Se puede nombrar, enlazar repos o demo? ¿Estado actual?
 - [ ] **prueba-tecnica-banco-api.md**: ¿se puede decir para qué empresa fue la prueba?
 - [ ] **publicador-historias.md**, **exchange-api.md**: ¿fueron para un cliente o propios?
